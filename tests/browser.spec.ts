@@ -1,0 +1,22 @@
+import { test, expect } from '@playwright/test';
+test('课程、原音、收藏和手机布局',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:18341');
+ await expect(page.locator('.course-card')).toHaveCount(111);
+ await page.getByRole('button',{name:'开始听一课'}).click();
+ await expect(page.locator('.note').first()).toBeVisible();
+ await page.locator('.note-actions button').first().click();
+ await expect.poll(()=>page.locator('audio').evaluate(a=>!a.paused&&a.currentTime>0)).toBe(true);
+ await page.locator('.note-top button').first().click();
+ await page.getByRole('button',{name:/我的收藏/}).click();
+ await expect(page.locator('.saved .note')).toHaveCount(1);
+ await page.reload();
+ await page.getByRole('button',{name:/我的收藏/}).click();
+ await expect(page.locator('.saved .note')).toHaveCount(1);
+ await page.setViewportSize({width:390,height:844});
+ await page.getByRole('button',{name:'探索课程',exact:true}).first().click();
+ await expect(page.locator('.course-card')).toHaveCount(111);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.screenshot({path:'/tmp/english-pod-mobile.png',fullPage:false});
+ expect(errors).toEqual([]);
+});

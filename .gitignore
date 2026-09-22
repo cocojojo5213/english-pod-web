@@ -1,0 +1,9 @@
+node_modules/
+dist/
+data/
+.env
+*.log
+*.sqlite*
+playwright-results/
+test-results/
+tsconfig.tsbuildinfo
