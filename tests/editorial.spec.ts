@@ -16,5 +16,5 @@ test('全库编辑内容与无时间保护',async({page,request})=>{
  await expect(page.getByRole('button',{name:/^回听 /})).toHaveCount(13);
  await page.getByRole('button',{name:'Dialogue',exact:true}).click();
  expect(await page.locator('.dialogue-lines p').count()).toBeGreaterThan(3);
- await expect(page.getByRole('button',{name:/循环对话/})).toHaveCount(1);
+ await expect(page.getByRole('button',{name:/循环 Dialogue/})).toHaveCount(1);
 });
