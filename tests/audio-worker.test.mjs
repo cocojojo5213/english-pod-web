@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 import {parseRange,reserve} from '../cloudflare/policy.js';
 const source=(await readFile(new URL('../cloudflare/audio-worker.js',import.meta.url),'utf8')).replace(/^import .*;\n/gm,'').replace('export class AudioBudget','class AudioBudget').replace('export default','globalThis.worker =')+'\nglobalThis.Budget=AudioBudget;';
-const box={DurableObject:class{constructor(ctx){this.ctx=ctx}},parseRange,reserve,Response,Headers,URL};
+const box={DurableObject:class{constructor(ctx){this.ctx=ctx}},parseRange,reserve,Response,Headers,URL,Request,caches:{default:{match:async()=>null,put:async()=>{}}}};
 vm.runInNewContext(source,box);
 test('并发扣额只放行剩余次数',async()=>{
  const now=new Date().toISOString();let state={day:now.slice(0,10),month:now.slice(0,7),daily:29999,monthly:50};
