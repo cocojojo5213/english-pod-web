@@ -24,13 +24,20 @@ export default {
     let range;
     try { range = request.method === 'HEAD' ? null : parseRange(rangeHeader,size); }
     catch { return new Response(null,{status:416,headers:{'Content-Range':`bytes */${size}`}}); }
-    const cacheKey = new Request(`${url.origin}${url.pathname}${rangeHeader ? `?range=${encodeURIComponent(rangeHeader)}` : ''}`, {method:'GET'});
-    const cache = caches.default;
-    const cached = await cache.match(cacheKey);
-    if (cached) return request.method === 'HEAD' ? new Response(null,{status:cached.status,headers:cached.headers}) : cached;
     const headers = new Headers({'Content-Type':'audio/mp4','Accept-Ranges':'bytes','Cache-Control':'public, max-age=86400, s-maxage=604800','Content-Length':String(range?.length ?? size),'X-Audio-Source':'cloudflare-r2','X-Content-Type-Options':'nosniff'});
     if (request.method === 'HEAD') return new Response(null,{headers});
+    const cacheKey = new Request(`${url.origin}${url.pathname}${rangeHeader ? `?range=${encodeURIComponent(rangeHeader)}` : ''}`, {method:'GET'});
     if (range) headers.set('Content-Range',`bytes ${range.offset}-${range.offset+range.length-1}/${size}`);
+    const cache = caches.default;
+    const cached = await cache.match(cacheKey);
+    if (cached) {
+      if (!range) return cached;
+      const hitHeaders = new Headers(cached.headers);
+      hitHeaders.set('Content-Range',`bytes ${range.offset}-${range.offset+range.length-1}/${size}`);
+      hitHeaders.set('Content-Length',String(range.length));
+      const body = await cached.arrayBuffer();
+      return new Response(body,{status:206,headers:hitHeaders});
+    }
     try {
       const quota = await env.BUDGET.get(env.BUDGET.idFromName('english-pod-global')).fetch('https://budget/');
       if (!quota.ok) return new Response('音频访问额度已用完，请稍后再试。',{status:429,headers:{'Retry-After':'3600','Cache-Control':'no-store'}});
@@ -39,7 +46,8 @@ export default {
       if (object.size !== size) { await object.body.cancel(); throw new Error('size'); }
       headers.set('ETag',object.httpEtag);
       const response = new Response(object.body,{status:range ? 206 : 200,headers});
-      await cache.put(cacheKey,response.clone());
+      const cacheResponse = range ? new Response(response.clone().body,{status:200,headers}) : response.clone();
+      await cache.put(cacheKey,cacheResponse);
       return response;
     } catch {
       // 计数或存储故障时关闭入口，不回退本机，也不绕过额度。
