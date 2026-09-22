@@ -85,7 +85,7 @@ def build():
                 chapter_list=[c for c in chapter_list if c['kind']!='dialogue']+override.get('dialogues',[])
                 chapter_list.sort(key=lambda c:c['start'])
                 vocab=[{'id':f'{cid}-vocab-{i}','term':v[0],'definition':v[1],'start':v[2],'end':v[3],'status':'已按原文整理；时间点待听校'} for i,v in enumerate(override.get('vocabulary',[]))]
-            (OUT/'courses'/f'{cid}.json').write_text(json.dumps({**item,'cues':cues,'chapters':chapter_list,'notes':notes,'vocabulary':vocab},ensure_ascii=False))
+            (OUT/'courses'/f'{cid}.json').write_text(json.dumps({**item,'cues':cues,'chapters':chapter_list,'notes':notes,'vocabulary':vocab,'dialogueText':overrides.get(cid,{}).get('dialogueText',[])},ensure_ascii=False))
     catalog.sort(key=lambda c: (['初级','中级','高级'].index(c['level']), c['number'], c['fileNumber']))
     (OUT/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False))
     print(f'已导入 {len(catalog)} 课，{sum(c["noteCount"] for c in catalog)} 段原文讲解')
