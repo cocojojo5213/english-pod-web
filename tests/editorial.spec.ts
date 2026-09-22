@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 test('全库编辑内容与无时间保护',async({page,request})=>{
- const base=process.env.EDITORIAL_TEST_URL||'http://127.0.0.1:18342';
+ const base=process.env.EDITORIAL_TEST_URL||'http://127.0.0.1:18341';
  const rows=await(await request.get(base+'/api/courses')).json();
  expect(rows).toHaveLength(111);
  for(const c of rows){

@@ -1,0 +1,33 @@
+{
+  "name": "english-pod-audio",
+  "main": "audio-worker.js",
+  "compatibility_date": "2026-09-01",
+  "account_id": "beab521a0ad87cbfa5e5ea986f74bdae",
+  "workers_dev": false,
+  "preview_urls": false,
+  "r2_buckets": [
+    {
+      "binding": "AUDIO",
+      "bucket_name": "english-pod-audio"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "BUDGET",
+        "class_name": "AudioBudget"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "AudioBudget"
+      ]
+    }
+  ],
+  "vars": {
+    "COURSES": "{\"beginner-01\":6456816,\"beginner-28\":18224670,\"beginner-02\":5882299,\"beginner-27\":14511871,\"beginner-26\":17882715,\"beginner-25\":17303692,\"beginner-24\":17527242,\"beginner-23\":25159866,\"beginner-22\":23881797,\"beginner-21\":21528296,\"beginner-20\":17171769,\"beginner-19\":19181062,\"beginner-18\":15017293,\"beginner-17\":16481735,\"beginner-16\":15937260,\"beginner-15\":16434795,\"beginner-14\":19304724,\"beginner-13\":13663369,\"beginner-12\":19427635,\"beginner-11\":21130648,\"beginner-10\":13319161,\"beginner-09\":13157572,\"beginner-08\":16213123,\"beginner-07\":16531420,\"beginner-06\":13142927,\"beginner-05\":12683694,\"beginner-04\":16268324,\"beginner-03\":12522105,\"intermediate-26\":16819300,\"intermediate-25\":11690501,\"intermediate-24\":16856476,\"intermediate-22\":17514850,\"intermediate-21\":17968825,\"intermediate-01\":18718075,\"intermediate-20\":15262363,\"intermediate-19\":19002575,\"intermediate-18\":14542664,\"intermediate-17\":16135650,\"intermediate-16\":21282850,\"intermediate-15\":12256005,\"intermediate-14\":19412614,\"intermediate-13\":12793837,\"intermediate-12\":19017220,\"intermediate-11\":17552777,\"intermediate-10\":18604292,\"intermediate-09\":18210400,\"intermediate-08\":18260836,\"intermediate-07\":18358471,\"intermediate-06\":16016235,\"intermediate-05\":17766564,\"intermediate-04\":19681602,\"intermediate-03\":23602670,\"intermediate-23\":18661747,\"intermediate-02\":20003278,\"advanced-29\":22767195,\"advanced-57\":16445945,\"advanced-28\":20741378,\"advanced-56\":19135249,\"advanced-27\":21943476,\"advanced-55\":19135249,\"advanced-26\":21651841,\"advanced-54\":14923037,\"advanced-25\":21376094,\"advanced-53\":12217702,\"advanced-52\":18450589,\"advanced-24\":17907499,\"advanced-51\":18336690,\"advanced-23\":22053620,\"advanced-50\":17788084,\"advanced-22\":19380203,\"advanced-21\":18152946,\"advanced-49\":20204038,\"advanced-20\":18152946,\"advanced-48\":19444909,\"advanced-19\":17234105,\"advanced-47\":21250555,\"advanced-18\":12224086,\"advanced-46\":19443782,\"advanced-17\":22550404,\"advanced-45\":19082301,\"advanced-16\":19651936,\"advanced-44\":18313033,\"advanced-15\":23384637,\"advanced-43\":20234830,\"advanced-14\":18953006,\"advanced-42\":19952959,\"advanced-13\":16889522,\"advanced-41\":18470116,\"advanced-12\":21957746,\"advanced-40\":14353286,\"advanced-11\":23184369,\"advanced-39\":20694814,\"advanced-10\":23280994,\"advanced-38\":20204413,\"advanced-09\":19134122,\"advanced-37\":17233729,\"advanced-08\":21453076,\"advanced-36\":20193032,\"advanced-07\":18885297,\"advanced-35\":19126236,\"advanced-06\":22438759,\"advanced-34\":19305100,\"advanced-05\":18042802,\"advanced-33\":16990277,\"advanced-04\":19808643,\"advanced-32\":16990277,\"advanced-03\":19497857,\"advanced-31\":19610629,\"advanced-02\":20875555,\"advanced-01\":18595655,\"advanced-30\":18294257}"
+  }
+}
