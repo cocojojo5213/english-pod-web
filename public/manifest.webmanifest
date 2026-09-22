@@ -1,0 +1,12 @@
+{
+  "name":"English Pod 学习空间",
+  "short_name":"English Pod",
+  "description":"听原声，读英文，理解每一个表达。",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#f5f5f7",
+  "theme_color":"#f5f5f7",
+  "lang":"zh-CN",
+  "orientation":"portrait-primary",
+  "icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

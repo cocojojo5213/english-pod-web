@@ -17,6 +17,7 @@ function App(){
  const [progress,setProgress]=useState<Record<string,number>>(()=>stored('ep:progress',{}));
  const audio=useRef<HTMLAudioElement>(null),request=useRef(0),pending=useRef(0),autoplay=useRef(false),lastSave=useRef(0);
  const active=current?.cues.findIndex(c=>position>=c.start&&position<c.end)??-1;
+ useEffect(()=>{if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{})},[]);
  useEffect(()=>{fetch('/api/courses').then(r=>{if(!r.ok)throw Error();return r.json()}).then(setCourses).catch(()=>setError('课程加载失败，请刷新重试。'))},[]);
  useEffect(()=>{if(follow&&tab==='transcript'&&view==='lesson')document.querySelector('.cue.active')?.scrollIntoView({behavior:'smooth',block:'nearest'})},[active,follow,tab,view]);
  useEffect(()=>{save('ep:marks',marks)},[marks]);
