@@ -7,3 +7,4 @@ data/
 playwright-results/
 test-results/
 tsconfig.tsbuildinfo
+__pycache__/
