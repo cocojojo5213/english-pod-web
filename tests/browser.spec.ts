@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 test('课程、原音、收藏和手机布局',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:18341');
+ await page.goto(process.env.TEST_URL||'http://127.0.0.1:18341');
  await expect(page.locator('.course-card')).toHaveCount(111);
  await page.getByRole('button',{name:'开始听一课'}).click();
  await expect(page.locator('.vocab-row')).toHaveCount(15);

@@ -1,6 +1,19 @@
-import test from 'node:test';
+import test,{before,after} from 'node:test';
 import assert from 'node:assert/strict';
-const base=process.env.TEST_URL||'http://127.0.0.1:18341';
+let base=process.env.TEST_URL?.replace(/\/$/,'');
+let server;
+before(async()=>{
+ if(base)return;
+ const {app}=await import('../server.mjs');
+ server=await new Promise((resolve,reject)=>{
+  const listener=app.listen(0,'127.0.0.1',()=>resolve(listener));
+  listener.once('error',reject);
+ });
+ base=`http://127.0.0.1:${server.address().port}`;
+});
+after(async()=>{
+ if(server)await new Promise((resolve,reject)=>server.close(error=>error?reject(error):resolve()));
+});
 test('课程资料、音频 Range 和安全边界',async()=>{
  const courses=await (await fetch(`${base}/api/courses`)).json();
  assert.equal(courses.length,111);assert.ok(courses.every(c=>c.available));

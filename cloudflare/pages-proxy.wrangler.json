@@ -1,0 +1,8 @@
+{
+  "name": "english-pod-pages-proxy",
+  "main": "pages-proxy.js",
+  "compatibility_date": "2026-08-08",
+  "account_id": "beab521a0ad87cbfa5e5ea986f74bdae",
+  "workers_dev": false,
+  "preview_urls": false
+}
